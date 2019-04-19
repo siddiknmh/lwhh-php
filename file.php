@@ -24,7 +24,8 @@ header("X-XSS-Protection: 0");
             <div class="column column-60 column-offset-20">
 
                     <?php 
-                    if (isset($_FILES['photo2'])) {
+
+                    if (isset($_FILES['photo'])) {
                         $allow_types = array(
                             'image/png',
                             'image/jpg',
@@ -32,27 +33,67 @@ header("X-XSS-Protection: 0");
                             'image/gif'
                         );
 
-                        $tmp_name = $_FILES['photo2']['tmp_name'];
-                        $name = $_FILES['photo2']['name'];
-                        $type = $_FILES['photo2']['type'];
-                        $size = $_FILES['photo2']['size'];
+                        $photos = $_FILES['photo'];
 
-                        if (in_array($type, $allow_types)) {
-                            if ($size < 1024*1024*2) {
-                                move_uploaded_file($tmp_name,  "uploads/$name"); 
+                        //var_dump($photos);
+
+                        $count = count($_FILES['photo']['name']);
+
+                        for ($i=0; $i < $count; $i++) { 
+
+                            $tmp_name = $_FILES['photo']['tmp_name'][$i];
+                            //var_dump($tmp_name);
+                            $name = $_FILES['photo']['name'][$i];
+                            $type = $_FILES['photo']['type'][$i];
+                            $size = $_FILES['photo']['size'][$i];
+
+
+                                if ($size < 1024*1024*2) {
+                                    move_uploaded_file($tmp_name,  "uploads/$name"); 
+
+                                } else {
+                                    echo "The file size is too big";
+                                }                        
+                        }
+                            
+
+                           
+                            
+
+                    
+
+                        
+                    }
+
+                  /*  if (isset($_FILES['photo2'])) {
+                        $allow_types_2 = array(
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/gif'
+                        );
+
+                        $tmp_name_2 = $_FILES['photo2']['tmp_name'];
+                        $name_2 = $_FILES['photo2']['name'];
+                        $type_2 = $_FILES['photo2']['type'];
+                        $size_2 = $_FILES['photo2']['size'];
+
+                        if (in_array($type_2, $allow_types_2)) {
+                            if ($size_2 < 1024*1024*2) {
+                                move_uploaded_file($tmp_name_2,  "uploads/$name_2"); 
 
                             } else {
                                 echo "The file size is too big";
                             }                        
                         } else {
-                            echo "We don't allow {$type} file type";
+                            echo "We don't allow {$type_2} file type";
                         }
 
                         
-
-                       var_dump($_FILES);
-
                     }
+*/
+
+                   
                             
 
 
@@ -71,8 +112,8 @@ header("X-XSS-Protection: 0");
                     <label for="lname">Last Name</label>
                     <input type="text" name="lname" id="lname">
                     
-                    <!--<label for="photo">Photo</label>
-                    <input type="file" name="photo[]" id="photo" multiple>-->
+                    <label for="photo">Photo</label>
+                    <input type="file" name="photo[]" id="photo" multiple>
                     
                     <label for="photo2">Photo2</label>
                     <input type="file" name="photo2" id="photo2">
