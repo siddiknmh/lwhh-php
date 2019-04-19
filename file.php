@@ -13,6 +13,7 @@ header("X-XSS-Protection: 0");
     <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
 </head>
 <body>
+    <!-- This is a comment for testing git pull command! -->
     <div class="container">
         <div class="row">
             <div class="column column-60 column-offset-20">
