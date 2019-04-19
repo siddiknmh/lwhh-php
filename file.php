@@ -22,21 +22,62 @@ header("X-XSS-Protection: 0");
         </div>
         <div class="row">
             <div class="column column-60 column-offset-20">
-                <?php if(isset($_GET['fname']) && !empty($_GET['fname'])): ?>
-                    First Name: <?php echo $_GET['fname']; ?>
-                <?php endif; ?>
-                <?php if(isset($_GET['lname']) && !empty($_GET['lname'])): ?>
-                    Last Name: <?php echo $_GET['lname']; ?>
-                <?php endif; ?>
 
-                <form action="GET">
+                    <?php 
+                    if (isset($_FILES['photo2'])) {
+                        $allow_types = array(
+                            'image/png',
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/gif'
+                        );
+
+                        $tmp_name = $_FILES['photo2']['tmp_name'];
+                        $name = $_FILES['photo2']['name'];
+                        $type = $_FILES['photo2']['type'];
+                        $size = $_FILES['photo2']['size'];
+
+                        if (in_array($type, $allow_types)) {
+                            if ($size < 1024*1024*2) {
+                                move_uploaded_file($tmp_name,  "uploads/$name"); 
+
+                            } else {
+                                echo "The file size is too big";
+                            }                        
+                        } else {
+                            echo "We don't allow {$type} file type";
+                        }
+
+                        
+
+                       var_dump($_FILES);
+
+                    }
+                            
+
+
+                    
+                    
+                   
+                
+                    ?>
+                
+                
+
+                <form method="post" enctype="multipart/form-data" >
                     <label for="fname">First Name</label>
                     <input type="text" name="fname" id="fname">
 
                     <label for="lname">Last Name</label>
                     <input type="text" name="lname" id="lname">
+                    
+                    <!--<label for="photo">Photo</label>
+                    <input type="file" name="photo[]" id="photo" multiple>-->
+                    
+                    <label for="photo2">Photo2</label>
+                    <input type="file" name="photo2" id="photo2">
 
-                    <button type="submit">Submit</button>
+                    <button type="submit"  value='abs'>Submit</button>
                 </form>
             </div>
         </div>
